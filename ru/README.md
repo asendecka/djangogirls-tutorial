@@ -1,60 +1,44 @@
-# Руководство Django Girls
+# Django views – time to create!
 
-[![Gitter](https://badges.gitter.im/DjangoGirls/tutorial.svg)](https://gitter.im/DjangoGirls/tutorial?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+Time to get rid of the bug we created in the last chapter! :)
 
-> Это руководство распространяется под международной лицензией Creative Commons Attribution-ShareAlike 4.0
-Чтобы ознакомиться с содержанием этой лицензии, посети: https://creativecommons.org/licenses/by-sa/4.0/
+A *view* is a place where we put the "logic" of our application. It will request information from the `model` you created before and pass it to a `template`. We'll create a template in the next chapter. Views are just Python functions that are a little bit more complicated than the ones we wrote in the **Introduction to Python** chapter.
 
-## Вступительное слово
+Views are placed in the `views.py` file. We will add our *views* to the `blog/views.py` file.
 
-Добро пожаловать в руководство Django Girls! Мы рады тебя здесь видеть :) В этом руководстве мы заглянем за кулисы веб-технологий и дадим 
-базовое представление о тех вещах, которые собираются в общую картину веба таким, каким мы его знаем.
+## blog/views.py
 
-Как и с любой незнакомой темой – это будет приключением. Но не волнуйся, тебе уже хватило смелости оказаться здесь, так что всё будет хорошо :) 
+OK, let's open up this file and see what's in there:
 
-## Введение
+{% filename %}blog/views.py{% endfilename %}
 
-Ты когда-нибудь чувствовала, что мир становится все более и более технологичным, в то время как ты остаёшься где-то позади? Ты задумывалась о том, как создать веб-сайт, но мотивации начать никогда не хватало? Приходило ли тебе в голову, что мир программного обеспечения слишком сложен, чтобы пробовать сделать что-то самой?
+```python
+from django.shortcuts import render
 
-Тогда у нас есть для тебя хорошие новости! Программирование – не такая уж сложная задача, как кажется, и мы покажем тебе, как весело это может быть.
+# Create your views here.
+```
 
-Это руководство не превратит тебя волшебным образом в программиста. Если ты хочешь добиться мастерства, то потребуются месяцы, а может быть и годы обучения и практики. Однако, мы хотим показать тебе, что программирование или создание веб-сайтов не настолько сложная задача как может показаться. Мы постараемся объяснить все настолько хорошо, насколько сможем, чтобы ты не чувствовала себя запуганной техническими деталями.
+Not too much stuff here yet.
 
-Надеемся, что ты полюбишь информационные технологии также, как мы любим их!
+Remember that lines starting with `#` are comments – this means that those lines won't be run by Python.
 
-## Что ты узнаешь из этого руководства?
+Let's create a *view* as the comment suggests. Add the following minimal view below it:
 
-После прохождения руководства у тебя будет простое работающее веб-приложение: свой собственный блог. Мы покажем, как разместить его онлайн, чтобы другие увидели твою работу!
+{% filename %}blog/views.py{% endfilename %}
 
-Он будет выглядеть следующим образом (более или менее):
+```python
+def post_list(request):
+    return render(request, 'blog/post_list.html', {})
+```
 
-![Рисунок 0.1](images/application.png)
+As you can see, we created a function (`def`) called `post_list` that takes `request` and `return` a function `render` that will render (put together) our template `blog/post_list.html`.
 
-> Если ты будешь работать над учебником самостоятельно и без тренера, который смог бы помочь при необходимости, то у нас есть для тебя чат: [![Gitter](https://badges.gitter.im/DjangoGirls/tutorial.svg)](https://gitter.im/DjangoGirls/tutorial?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge). Мы попросили наших тренеров и успешно прошедших обучение участников заглядывать туда время от времени и помогать остальным! Не стесняйся задавать там свои вопросы!
+Save the file, go to http://127.0.0.1:8000/ and see what we've got.
 
-Хорошо, [давай начнем с начала...][3]
+Another error! Read what's going on now:
 
- [3]: ./how_the_internet_works/README.md
+![Error](images/error.png)
 
-## Прохождение руководства дома
+This shows that the server is running again, at least, but it still doesn't look right, does it? Don't worry, it's just an error page, nothing to be scared of! Just like the error messages in the console, these are actually pretty useful. You can read that the *TemplateDoesNotExist*. Let's fix this bug and create a template in the next chapter!
 
-Принимать участие в воркшопе Django Girls – это потрясающе, но мы понимаем, что не всегда есть такая возможность. Поэтому мы приветствуем прохождение
-данного руководства дома. В настоящий момент мы готовим видео, которое поможет следовать руководству самостоятельно. Работа над ними ещё не закончена,
-но все больше и больше тем скоро будут разобраны на YouTube-канале [Coding is for girls](https://www.youtube.com/channel/UC0hNd2uW8jTR5K3KBzRuG2A/feed).
-
-## Сотрудничество и дополнительная информация
-
-Это руководство поддерживается [DjangoGirls][4]. Если ты нашла ошибки или хочешь обновить информацию, пожалуйста, [следуй этим рекомендациям][5].
-
- [4]: https://djangogirls.org/
- [5]: https://github.com/DjangoGirls/tutorial/blob/master/README.md
-
-## Хочешь помочь с переводом руководства на другие языки?
-
-В настоящее время перевод координируется через платформу crowdin.com:
-
-https://crowdin.com/project/django-girls-tutorial
-
-Если твоего языка нет в списке на crowdin, пожалуйста, [дай нам знать][6], чтобы мы могли его добавить.
-
- [6]: https://github.com/DjangoGirls/tutorial/issues/new
+> Learn more about Django views by reading the official documentation: https://docs.djangoproject.com/en/1.11/topics/http/views/
